@@ -4,6 +4,7 @@ from flaskblog.models import User,Post
 from flaskblog.forms import RegistrationForm, LoginForm
 from flask_login import login_user
 
+
 posts = [
     {
         'author': 'Aman Dhatterwal',
