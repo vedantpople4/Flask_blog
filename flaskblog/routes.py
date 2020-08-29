@@ -55,7 +55,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login Unsucessful. Please check Email and password','danger')
+            flash(f'Login Unsucessful. Please check Email and password','danger')
 
     return render_template('login.html',title='=Login', form=form)
 
@@ -72,7 +72,7 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('your account has been updated!', 'success')
+        flash(f'your account has been updated!',category='info')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
