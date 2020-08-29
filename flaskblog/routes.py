@@ -70,7 +70,7 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit:
         current_user.username = form.username.data
-        current_user.email = form.username.email
+        current_user.email = form.email.data
         db.session.commit()
         flash('Account Updated','success')
         return redirect(url_for('account'))
