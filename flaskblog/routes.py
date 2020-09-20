@@ -7,25 +7,12 @@ import secrets
 import os
 from PIL import Image
 
-posts = [
-    {
-        'author': 'Aman Dhatterwal',
-        'title':'Blog on Flutter',
-        'content':'First blog post on flutter',
-        'date_posted':'August 15, 2020'
-    },
-    {
-        'author': 'Love Babbar',
-        'title':'Blog on Machine Learning',
-        'content':'First blog post on ML',
-        'date_posted':'August 16, 2020'
-    }
-]
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html',posts=posts)
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 @app.route("/about")
 def hello():
@@ -104,6 +91,9 @@ def account():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
+        post = Post(title=form.title.data, content = form.content.data, author = current_user)
+        db.session.add(post)
+        db.session.commit()
         flash('Your post has been posted!', category='info')
         return redirect(url_for('home'))
     return render_template('create_post.html',title='New Post', form='form')
