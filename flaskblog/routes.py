@@ -96,4 +96,4 @@ def new_post():
         db.session.commit()
         flash('Your post has been posted!', category='info')
         return redirect(url_for('home'))
-    return render_template('create_post.html',title='New Post', form='form')
+    return render_template('create_post.html',title='New Post', form=form)
