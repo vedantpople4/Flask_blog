@@ -133,3 +133,4 @@ def deletepost(post_id):
     db.session.commit()
     flash('Your post is deleted!','Sucess')
     return redirect(url_for('home'))
+
