@@ -149,4 +149,4 @@ def reset_required():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RequestResetForm()
-    return render_template('reset_request.html', )
+    return render_template('reset_request.html', title='Reset Password', form = form)
