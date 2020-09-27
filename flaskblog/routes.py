@@ -146,8 +146,13 @@ def user_posts(username):
     return render_template('user_post.html', posts=posts, user=user)
 
 def send_reset_email(user):
-    pass 
-
+    token = user.get_reset_token()
+    msg = Message('Password reset Request', sender='noreply@demo.com', recipients=[user.email])
+    msg.body = ''' To reset the password , visit the following link:
+{url_for('reset_token',token=token, _external=True)}
+    
+If you did not make request ,simply ignore this mail.
+'''
 @app.route("/reset_password", methods=['GET','POST'])
 def reset_required():
     if current_user.is_authenticated:
