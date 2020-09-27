@@ -145,15 +145,8 @@ def user_posts(username):
         .paginate(page = page, per_page=5)
     return render_template('user_post.html', posts=posts, user=user)
 
-def send_reset_email(user):
-    token = user.get_reset_token()
-    Message = Message('Password reset Request', sender='noreply@demo.com', recipients=[user.email])
-    Message.body = ''' To reset the password , visit the following link:
-{url_for('reset_token',token=token, _external=True)}
+
     
-If you did not make request ,simply ignore this mail.
-'''
-mail.send(Message)
 
 @app.route("/reset_password", methods=['GET','POST'])
 def reset_required():
@@ -162,7 +155,7 @@ def reset_required():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
-        send_reset_email(user)
+        #send_reset_email(user)
         flash('Email sent for Password reset.','info')
         return redirect(url_for(login))
     return render_template('reset_request.html', title='Reset Password', form = form)
