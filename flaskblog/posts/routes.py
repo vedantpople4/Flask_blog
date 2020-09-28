@@ -1,4 +1,8 @@
-from flask import Blueprint
+from flask import render_template, url_for, flash, redirect, request, abort, Blueprint
+from flask_login import current_user, login_required
+from flaskblog import db
+from flaskblog.models import Post
+from flaskblog.posts.forms import PostForm
 
 posts = Blueprint('posts',__name__)
 
@@ -53,7 +57,7 @@ def deletepost(post_id):
 @posts.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username= username).first_or_404()
+    user = user.query.filter_by(username= username).first_or_404()
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.date_posted.desc())\
         .paginate(page = page, per_page=5)
